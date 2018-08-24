@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Messages } from './messages';
-import getChatLog, { showMembers } from './service';
+//import { Members } from './members';
+import { getChatLog, showMembers, sortMessages } from './service';
 
 import './App.css';
 
@@ -10,18 +11,17 @@ class App extends Component {
   componentDidMount() {
     this.props.getChatLog();
     this.props.showMembers();
+    this.props.sortMessages();
   };
   
-  handleHover(){
-
-  }
   
   render() {
-    console.log(this.props);
+   // console.log(this.props);
     return (
       <div className="App">
-      <h1>Hello Jo</h1>
-      <Messages messages={this.props.messages} members={this.props.members} onMouseOver={this.handleHover} />
+      
+      <Messages className="messages" messages={this.props.messages} members={this.props.members}/>
+      
       </div>
     );
   }
@@ -29,11 +29,12 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    messages: state.messages
+    messages: state.messages,
+    members: state.members
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ getChatLog, showMembers }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getChatLog, showMembers, sortMessages }, dispatch);
 
 export default connect(
   mapStateToProps,
